@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: image/png');
 
-	$OS = isset($_GET['os']) ? strtolower($_GET['os']) : "luma611";
+	$OS = isset($_GET['os']) ? strtolower($_GET['os']) : "luma612";
 	$MODEL = isset($_GET['model']) ? strtolower($_GET['model']) : "3ds";
 	$REGION = isset($_GET['region']) ? strtolower($_GET['region']) : "usa";
 	$SD = isset($_GET['sd']) ? strtolower($_GET['sd']) : "2g";
@@ -17,6 +17,7 @@ header('Content-Type: image/png');
 function setOS(){
 
 	switch ($GLOBALS["OS"]) {
+		case 'luma612': $os = 'Luma3DS v6.1.2'; $subos2 = '2016, AuroraWright';	break;
 		case 'luma611': $os = 'Luma3DS v6.1.1'; $subos2 = '2016, AuroraWright';	break;
 		case 'luma601': $os = 'Luma3DS v6.0.1';	$subos2 = '2016, AuroraWright';	break;
 		case 'luma6': 	$os = 'Luma3DS v6.0';	$subos2 = '2016, AuroraWright';	break;
