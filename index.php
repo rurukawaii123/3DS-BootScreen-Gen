@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Project Tritium-3D</title>
 	<link rel="stylesheet" href="//cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script src="//cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
@@ -105,6 +106,33 @@
 		<div class="checkbox">
 
 			<label>
+			<input type="checkbox" name="stLine">
+			<strong>Hold</strong>
+			<select name="stButton" class="form-control form-control-sm select-inline">
+				<option value="L" selected="selected">L</option>
+				<option value="R">R</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="X">X</option>
+				<option value="Y">Y</option>
+				<option value="UP">UP</option>
+				<option value="DOWN">DOWN</option>
+				<option value="LEFT">LEFT</option>
+				<option value="RIGHT">RIGHT</option>
+				<option value="START">START</option>
+				<option value="SELECT">SELECT</option>
+			</select>
+			<strong>now</strong> to enter to
+			<select name="stTool" class="form-control form-control-sm select-inline">
+				<option value="rxtools" selected="selected">Rxtools settings</option>
+				<option value="bootmanager">Boot Manager</option>
+				<option value="gateway">Gateway Menu</option>
+				<option value="settings">Settings</option>
+			</select>
+
+			</label>
+
+			<label>
 			<input type="checkbox" name="ndLine">
 			<strong>Hold</strong>
 			<select name="ndButton" class="form-control form-control-sm select-inline">
@@ -143,6 +171,6 @@
 
 <!-- TODO::
 
-	- 2DS ROJA
-
+	- IMAGE REWORK
+	- MENHAX COMPTIBILITY DOUBLE IMAGE ETC,ETC...
 -->

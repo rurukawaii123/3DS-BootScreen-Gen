@@ -6,11 +6,20 @@ header('Content-Type: image/png');
 	$REGION = isset($_GET['region']) ? strtolower($_GET['region']) : "usa";
 	$SD = isset($_GET['sd']) ? strtolower($_GET['sd']) : "2g";
 
+	$STLINE = isset($_GET['stLine']) ? strtolower($_GET['stLine']) : false;
+	$STBUTTON = isset($_GET['stButton']) ? strtoupper($_GET['stButton']) : false;
+	$STTOOL = isset($_GET['stTool']) ? strtolower($_GET['stTool']) : false ;
+
+	$NDLINE = isset($_GET['ndLine']) ? strtolower($_GET['ndLine']) : false;
+	$NDBUTTON = isset($_GET['ndButton']) ? strtoupper($_GET['ndButton']) : false;
+	$NDTOOL = isset($_GET['ndTool']) ? strtolower($_GET['ndTool']) : false;
+
+
 	$im = imagecreatetruecolor(400, 240);
 
-	$blanco = imagecolorallocate($GLOBALS["im"], 255, 255, 255);
-	$gris = imagecolorallocate($GLOBALS["im"], 128, 128, 128);
-	$negro = imagecolorallocate($GLOBALS["im"], 0, 0, 0);
+	$color_FF = imagecolorallocate($GLOBALS["im"], 255, 255, 255);
+	$color_80 = imagecolorallocate($GLOBALS["im"], 128, 128, 128);
+	$color_00 = imagecolorallocate($GLOBALS["im"], 0, 0, 0);
 
 	$fuente = '../fonts/PxPlus_IBM_VGA8.ttf';
 
@@ -30,9 +39,9 @@ function setOS(){
 
 	$subos = 'Copyright (C)';
 
-	imagettftext($GLOBALS["im"], 12, 0, 25, 30, $GLOBALS["gris"], $GLOBALS["fuente"], $os);
-	imagettftext($GLOBALS["im"], 12, 0, 25, 45, $GLOBALS["gris"], $GLOBALS["fuente"], $subos);
-	imagettftext($GLOBALS["im"], 12, 0, 135, 45, $GLOBALS["gris"], $GLOBALS["fuente"], $subos2);
+	imagettftext($GLOBALS["im"], 12, 0, 25, 30, $GLOBALS["color_80"], $GLOBALS["fuente"], $os);
+	imagettftext($GLOBALS["im"], 12, 0, 25, 45, $GLOBALS["color_80"], $GLOBALS["fuente"], $subos);
+	imagettftext($GLOBALS["im"], 12, 0, 135, 45, $GLOBALS["color_80"], $GLOBALS["fuente"], $subos2);
 
 }
 
@@ -64,11 +73,11 @@ function setModel(){
 
 
 
-	imagettftext($GLOBALS["im"], 12, 0, 0, 93, $GLOBALS["gris"], $GLOBALS["fuente"], $model);
-	imagettftext($GLOBALS["im"], 12, 0, 0, 125, $GLOBALS["gris"], $GLOBALS["fuente"], 'Main Processor');
-	imagettftext($GLOBALS["im"], 12, 0, 160, 125, $GLOBALS["gris"], $GLOBALS["fuente"], $cpu);
-	imagettftext($GLOBALS["im"], 12, 0, 0, 140, $GLOBALS["gris"], $GLOBALS["fuente"], 'Memory Testing');
-	imagettftext($GLOBALS["im"], 12, 0, 160, 140, $GLOBALS["gris"], $GLOBALS["fuente"], $mem);
+	imagettftext($GLOBALS["im"], 12, 0, 0, 93, $GLOBALS["color_80"], $GLOBALS["fuente"], $model);
+	imagettftext($GLOBALS["im"], 12, 0, 0, 125, $GLOBALS["color_80"], $GLOBALS["fuente"], 'Main Processor');
+	imagettftext($GLOBALS["im"], 12, 0, 160, 125, $GLOBALS["color_80"], $GLOBALS["fuente"], $cpu);
+	imagettftext($GLOBALS["im"], 12, 0, 0, 140, $GLOBALS["color_80"], $GLOBALS["fuente"], 'Memory Testing');
+	imagettftext($GLOBALS["im"], 12, 0, 160, 140, $GLOBALS["color_80"], $GLOBALS["fuente"], $mem);
 }
 
 function setSD(){
@@ -92,19 +101,37 @@ function setSpace(){
 	$nand = setNAND();
 	$sd = setSD();
 
-	imagettftext($GLOBALS["im"], 12, 0, 0, 155, $GLOBALS["gris"], $GLOBALS["fuente"], 'Detecting Primary Master ... ' .  $nand);
-	imagettftext($GLOBALS["im"], 12, 0, 0, 170, $GLOBALS["gris"], $GLOBALS["fuente"], 'Detecting Primary Slave ... ' .  $sd);
-
-
+	imagettftext($GLOBALS["im"], 12, 0, 0, 155, $GLOBALS["color_80"], $GLOBALS["fuente"], 'Detecting Primary Master ... ' .  $nand);
+	imagettftext($GLOBALS["im"], 12, 0, 0, 170, $GLOBALS["color_80"], $GLOBALS["fuente"], 'Detecting Primary Slave ... ' .  $sd);
 }
 
+function setBoot(){
+
+	$x = 0;
+	$y = 205;
+
+	if ($GLOBALS["STLINE"]){
+		imagettftext($GLOBALS["im"], 12, 0, $x, $y, $GLOBALS["color_FF"], $GLOBALS["fuente"], 'Hold ' . $GLOBALS["STBUTTON"] . ' now');
+		imagettftext($GLOBALS["im"], 12, 0, $x+87, $y, $GLOBALS["color_80"], $GLOBALS["fuente"], 'to enter to');
+		imagettftext($GLOBALS["im"], 12, 0, $x+184, $y, $GLOBALS["color_FF"], $GLOBALS["fuente"], $GLOBALS["STTOOL"]);
+	}
+
+	if ($GLOBALS["NDLINE"]){
+		imagettftext($GLOBALS["im"], 12, 0, $x, $y+15, $GLOBALS["color_FF"], $GLOBALS["fuente"], 'Hold ' . $GLOBALS["NDBUTTON"] . ' now');
+		imagettftext($GLOBALS["im"], 12, 0, $x+87, $y+15, $GLOBALS["color_80"], $GLOBALS["fuente"], 'to enter to');
+		imagettftext($GLOBALS["im"], 12, 0, $x+184, $y+15, $GLOBALS["color_FF"], $GLOBALS["fuente"], $GLOBALS["NDTOOL"]);
+	}
+}
 
 function render(){
 
 	setOS();
 	setModel();
 	setSpace();
+	setBoot();
 
+	$infobadge = imagecreatefrompng('info.png');
+	imagecopymerge($GLOBALS["im"], $infobadge,0,17,0,0,21,29,100);
 
 	imagepng($GLOBALS["im"]);
 }
